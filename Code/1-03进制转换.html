@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>进制转换</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function Stack(){
+				this.arr =[];
+				Stack.prototype.push = function(element){
+					this.arr.push(element);
+				};
+				Stack.prototype.pop = function(){
+					//console.log("a");
+					return this.arr.pop();					
+				};
+			};
+			function dec2bin(decNumber){
+				//1. 定义栈对象
+				var s = new Stack();
+				//2. 循环操作
+				while(decNumber>0){
+					//获取余数,并放入栈中
+					s.push(decNumber%2);//2:最终转换的进制数
+					decNumber = Math.floor(decNumber/2);//2:最终转换的进制数					
+				}
+				//3. 从栈中取出元素
+				var binaryString ='结果:';
+				while ((a=s.pop())!=undefined){
+					binaryString +=a;
+				}
+				return binaryString;
+			}
+			document.write(dec2bin(5));//5:要转换的数值
+		</script>
+	</body>
+</html>
