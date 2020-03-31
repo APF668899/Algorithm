@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>封装队列</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function Queue(){
+				//属性
+				this.items=[];
+				//方法
+				//1. 将元素加入到队列
+				Queue.prototype.enqueue = function(element){
+					this.items.push(element+" ");
+				}
+				//2. 从队列中删除前端元素
+				Queue.prototype.dequeue = function(){
+					return this.items.shift();
+				}
+				//3. 查看前端元素
+				Queue.prototype.front = function(){
+					return this.items[0];
+				}
+				//4. 查看队列是否为空
+				Queue.prototype.isEmpty = function(){
+					return this.items.length==0;
+				}
+				//5. 查看队列中元素的个数
+				Queue.prototype.size = function(){
+					return this.items.length;
+				}
+				//6. toString方法
+				Queue.prototype.toString = function(){
+					var resultString = '';
+					for (var i=0;i<this.items.length;i++) {
+						resultString += this.items[i] + '';
+					}
+					return resultString;
+				};
+			}
+			//使用队列
+			var queue = new Queue();
+			//将元素加入到队列中
+			queue.enqueue('abc');
+			queue.enqueue('xyz');
+			queue.enqueue('hello');
+			alert("1,"+queue);//查看队列
+			alert("2,"+queue.front());//查看前端元素
+			alert("3,"+queue.isEmpty());//查看队列是否为空
+			alert("4,"+queue.size());//查看队列中元素的个数
+			alert("5,"+queue.toString());
+			queue.dequeue();//从队列删除
+			alert("1,"+queue);//查看队列
+			alert("2,"+queue.front());//查看前端元素
+			alert("3,"+queue.isEmpty());//查看队列是否为空
+			alert("4,"+queue.size());//查看队列中元素的个数
+			alert("5,"+queue.toString()); 
+			queue.dequeue();//从队列删除
+			queue.dequeue();//从队列删除
+			alert("1,"+queue);//查看队列
+			alert("2,"+queue.front());//查看前端元素
+			alert("3,"+queue.isEmpty());//查看队列是否为空
+			alert("4,"+queue.size());//查看队列中元素的个数
+			alert("5,"+queue.toString()); 
+		</script>
+	</body>
+</html>
