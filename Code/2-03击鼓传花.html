@@ -12,7 +12,7 @@
 				//方法
 				//1. 将元素加入到队列
 				Queue.prototype.enqueue = function(element){
-					this.items.push(element+" ");
+					this.items.push(element);
 				}
 				//2. 从队列中删除前端元素
 				Queue.prototype.dequeue = function(){
@@ -22,10 +22,6 @@
 				Queue.prototype.front = function(){
 					return this.items[0];
 				}
-				//4. 查看队列是否为空
-				Queue.prototype.isEmpty = function(){
-					return this.items.length==0;
-				}
 				//5. 查看队列中元素的个数
 				Queue.prototype.size = function(){
 					return this.items.length;
@@ -33,26 +29,28 @@
 			};
 			function passGame(nameList,num){
 				//1. 创建一个队列结构
-				var queue = new Queue();
+				var queue = new Queue();				
 				//2. 将所有人依次加入到队列中
 				for(var i=0;i<nameList.length;i++){
 					queue.enqueue(nameList[i]);
-				}
+				};
 				//队列中的人数只有一个时结束循环
 				while (queue.size()>1){
 					//3. 开始数字不是num的时候,重新加入到队列的末尾,是num这个数字的时候,将其从队列中删除
 					//3.1 num数字之前的人重新加入到队列的末尾
-					for (var i=0;i<=num-1;i++) {
+					for(var i=0;i<num-1;i++) {
 						queue.enqueue(queue.dequeue());
-					}
+					};
 					//3.2. num对应的这个人直接淘汰掉
-					queue.dequeue();
-				}
+					queue.dequeue();	
+				};
 				//4. 获取剩下的那个人
 				var endName = queue.front();
-				alert('最后剩下的人:'+endName);
-				return nameList.indexOf(endName);
-			}
+				document.write('最后剩下的人:'+endName+"<br>");	
+				//indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置
+				//trim()去除字符串的头尾空格
+				return nameList.indexOf(endName.trim());
+			};
 			//测试
 			names = ['my','name','is','fly','sand'];
 			document.write("这个人的数组下标是:"+passGame(names,2));
