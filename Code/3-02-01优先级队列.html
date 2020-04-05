@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>优先级队列</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//封装优先级队列
+			function PriorityQueue(){				
+				//封装属性,创建数组
+				var arr = [];
+				//实现插入方法
+				PriorityQueue.prototype.enqueue = function(element,priority){
+					//2. 判断队列是否为空
+					if (arr.length == 0) {
+						arr.push(element+","+priority);							
+					} else{
+						var added = false;
+						for(var i=0;i<arr.length;i++){
+						//indexOf()返回某个指定的字符串值在字符串首次出现的位置,数字
+						//substring()截取字符串
+							if (priority < arr[i].substring(arr[i].indexOf(",")+1)) {
+								//splice(a,b,c) 方法向从数组中添加/删除项目，然后返回被删除的项目,但会改变原始数组。
+								//a:要添加的数组下标位置
+								//b:从要添加的数组下标位置开始去掉b个数
+								//c:要添加/删除的值
+								arr.splice(i,0,element+","+priority);
+								added = true;
+								break;
+							}
+						}
+						if (!added) {
+							arr.push(element+","+priority);//向数组中添加元素
+						}
+					}
+				}
+				//2. 从队列中删除前端元素
+				PriorityQueue.prototype.dequeue = function(){
+					return this.items.shift();
+				}
+				//6. toString方法
+				PriorityQueue.prototype.toString = function(){
+					var resultString = '';
+					for (var i=0;i<arr.length;i++) {
+						resultString += arr[i]+"</br>";
+					}
+					return resultString;
+				};			
+			}
+			//测试代码
+			var pq = PriorityQueue();
+			//enqueue方法
+			PriorityQueue.prototype.enqueue ('is',33);
+			PriorityQueue.prototype.enqueue ('sand',55);
+			PriorityQueue.prototype.enqueue ('about',77);
+			PriorityQueue.prototype.enqueue ('name',22);
+			PriorityQueue.prototype.enqueue ('what',66);
+			PriorityQueue.prototype.enqueue ('my',11);
+			PriorityQueue.prototype.enqueue ('you',88);
+			PriorityQueue.prototype.enqueue ('fly',44);			
+			var resultString = PriorityQueue.prototype.toString();
+			document.write(resultString);
+		</script>
+	</body>
+</html>
