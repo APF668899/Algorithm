@@ -11,7 +11,7 @@
 				//封装属性,创建数组
 				var arr = [];
 				//实现插入方法
-				PriorityQueue.prototype.enqueue = function(element,priority){
+				enqueue = function(element,priority){
 					//2. 判断队列是否为空
 					if (arr.length == 0) {
 						arr.push(element+","+priority);							
@@ -51,14 +51,14 @@
 			//测试代码
 			var pq = PriorityQueue();
 			//enqueue方法
-			PriorityQueue.prototype.enqueue ('is',33);
-			PriorityQueue.prototype.enqueue ('sand',55);
-			PriorityQueue.prototype.enqueue ('about',77);
-			PriorityQueue.prototype.enqueue ('name',22);
-			PriorityQueue.prototype.enqueue ('what',66);
-			PriorityQueue.prototype.enqueue ('my',11);
-			PriorityQueue.prototype.enqueue ('you',88);
-			PriorityQueue.prototype.enqueue ('fly',44);			
+			enqueue ('is',33);
+			enqueue ('sand',55);
+			enqueue ('about',77);
+			enqueue ('name',22);
+			enqueue ('what',66);
+			enqueue ('my',11);
+			enqueue ('you',88);
+			enqueue ('fly',44);			
 			var resultString = PriorityQueue.prototype.toString();
 			document.write(resultString);
 		</script>
