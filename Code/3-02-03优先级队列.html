@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>优先级队列03</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function PriorityQueue(){
+				var arr = [];
+				function QueueElement(element,prioity){
+					this.element =element;
+					this.prioity =prioity;
+				};
+				enqueue = function(element,prioity){
+				//	console.log(element+","+prioity);
+					var queueElement = new QueueElement(element,prioity);					
+					if(arr.isEmpty){
+						arr.push(queueElement);
+					}else{
+						var added = false;
+						for(var i=0;i<arr.length;i++){
+							if (prioity < arr[i].prioity) {
+								arr.splice(i,0,queueElement);
+								added = true;
+								break;
+							}
+						}
+						if (!added) {
+							arr.push(queueElement);//向数组中添加元素
+						}
+						console.log(queueElement);
+					}
+				}
+				console.log(arr);
+				//2. 从队列中删除前端元素
+				PriorityQueue.prototype.dequeue = function(){
+					return this.items.shift();
+				}
+				//6. toString方法
+				PriorityQueue.prototype.toString = function(){
+					var resultString = '';
+					for (var i=0;i<arr.length;i++) {
+						resultString += arr[i].element+","+arr[i].prioity+"</br>";
+					}
+					return resultString;
+				};
+				//console.log(arr);
+			}
+			var pq = new PriorityQueue();
+			enqueue('is',33);
+			enqueue('sand',55);
+			enqueue('about',77);
+			enqueue('name',22);
+			enqueue('what',66);
+			enqueue('my',11);
+			enqueue('you',88);
+			enqueue('fly',44);			
+			document.write(pq);
+		</script>
+	</body>
+</html>
