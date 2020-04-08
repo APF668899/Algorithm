@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>append方法</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//封装列表类
+			function LinkedList(){
+				//内部的类:节点类
+				function Node(data){
+					this.data = data;
+					this.next = null;	
+				}
+				//属性
+				this.head = null;
+				this.length = 0;
+				//1. 追加方法
+				LinkedList.prototype.append = function (data){
+					//1. 创建新的结点
+					var newNode =new Node(data);
+					//2. 判断是否添加的是第一个节点
+					if (this.length == 0) { //2.1 是第一个结点
+						this.head = newNode;
+					} else{ //2.2 不是第一个结点
+						//找到最后的一个结点
+						var current = this.head;
+						while(current.next){
+							current = current.next;
+						}
+						//最后的结点指向新的结点
+						current.next = newNode;
+					}
+					//3. 链表长度+1
+					this.length += 1;
+				}
+			}
+			//测试代码
+			//1. 创建LinkedList
+			var list = new LinkedList();
+			list.append ('my');
+			list.append ('name');
+			list.append ('is');
+			list.append ('fly');
+			list.append ('sand');
+			document.write(list);
+		</script>
+	</body>
+</html>
