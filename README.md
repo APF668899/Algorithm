@@ -1,2 +1,2 @@
 # Data structure and algorithm for javascript
-数据结构与算法
+javascript的数据结构与算法
