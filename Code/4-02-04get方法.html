@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>get方法</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//封装列表类
+			function LinkedList(){
+				//内部的类:节点类
+				function Node(data){
+					this.data = data;
+					this.next = null;	
+				}
+				//属性
+				this.head = null;
+				this.length = 0;
+				//1. 追加方法
+				LinkedList.prototype.append = function (data){
+					//1. 创建新的结点
+					var newNode =new Node(data);
+					//2. 判断是否添加的是第一个节点
+					if (this.length == 0) { //2.1 是第一个结点
+						this.head = newNode;
+					} else{ //2.2 不是第一个结点
+						//找到最后的一个结点
+						var current = this.head;
+						while(current.next){
+							current = current.next;
+						}
+						//最后的结点指向新的结点
+						current.next = newNode;
+					}
+					//3. 链表长度+1
+					this.length += 1;
+				}
+				//2. toString方法
+				LinkedList.prototype.toString = function (){
+					//1. 定义变量
+					var current =this.head;
+					var listString = "";
+					//2. 循环获取一个个的节点
+					while (current){
+						listString +=current.data + " ";
+						current = current.next;
+					}
+					return listString; 
+				}
+				//3. insert方法
+				LinkedList.prototype.insert = function(position,data){
+					//1. 对position进行越界判断
+					if(position<0 || position > this.length) return false;
+					//2. 根据data创建newNode
+					var newNode = new Node(data);
+					//3. 判断插入的位置是否是第一个
+					if(position == 0){
+						newNode.next = this.head;//新数据的下一个数据=头数据
+						console.log(newNode.next);
+						this.head =newNode;//头数据=新的数据
+						console.log(this.head);
+					}else{
+						var index  = 0;//第一个指针						
+						var current = this.head;//新的变量=头数据						
+						var previous = null;
+						//找到要插入的位置
+						while(index++ < position){
+							previous = current;//prev=当前下标值的数据	
+							current = current.next;//curr=当前下标值+1的数据
+						}
+						newNode.next = current;//新数据的下一个数据 =current 
+						previous.next = newNode;//previous的下一个数据 =新数据
+					}
+					//4. length+1
+					this.length++;
+					return true;
+				}
+				//4. get方法
+				LinkedList.prototype.get = function(position){
+					//1. 越界判断
+					if(position<0 || position >= this.length) return null;
+					//2. 获取对应的数据
+					var current = this.head;
+					var  index = 0;
+					while (index++ < position){
+						current = current.next;	
+					}
+					return current.data;
+				}				
+			}
+			//测试代码
+			//1. 创建LinkedList
+			var list = new LinkedList();
+			list.append('my');
+			list.append('name');
+			list.append('is');
+			list.append('fly');
+			list.append('sand');
+			list.insert(0,"oh");
+			list.insert(4,"on");
+			document.write(list);
+			alert(list.get(2));
+			alert(list.get(4));
+		</script>
+	</body>
+</html>
