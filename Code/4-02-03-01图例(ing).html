@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>insert方法</title>
+		<style type="text/css">
+			.back{
+				background: #00AEE3;width:100%;height:100px;
+			}
+			.elem{
+				background:greenyellow;width:80px;height:80px;display:block;float:left;
+				margin:10px;text-align: center;line-height:80px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="back"></span>
+			<div class="elem" id="elem_1">1</div>
+			<div class="elem" id="elem_2">2</div>
+			<div class="elem" id="elem_3">3</div>
+		</div>		
+		<button style="width:100px;height:50px;margin:10px;float:left;" onclick="butt()">下一步</button>
+		<div class="elem" id="elem_a" style="background:green;display:none;">a</div>
+		<div class="elem" id="elem_b" style="background:green;display:none;">b</div>		
+		<script type="text/javascript">
+			//var elem_a = document.getElementById(elem_a);
+			//var elem_b = document.getElementById(elem_b);
+			var bu=0;
+			function butt() {
+				if (bu==0) {elem_a.style.display="block";console.log("1.new一个新的元素:a,要插入的位置是下标值为2的地方");}
+				if (bu==1) {elem_3.style.marginLeft="110px";console.log("2.元素3向后移动");}
+				if (bu==2) {elem_a.style.left="100px";console.log("3.");}
+				if (bu==3) {elem_a.style.left="100px";console.log("4.");}
+				bu++;
+			}			
+			
+			//封装列表类
+			function LinkedList(){				
+				//内部的类:节点类
+				function Node(data){
+					this.data = data;
+					this.next = null;	
+				}
+				//属性
+				this.head = null;
+				this.length = 0;
+				//1. 追加方法
+				LinkedList.prototype.append = function (data){
+					//1. 创建新的结点
+					var newNode =new Node(data);
+					//2. 判断是否添加的是第一个节点
+					if (this.length == 0) { //2.1 是第一个结点
+						this.head = newNode;
+					} else{ //2.2 不是第一个结点
+						//找到最后的一个结点
+						var current = this.head;
+						while(current.next){
+							current = current.next;
+						}
+						//最后的结点指向新的结点
+						current.next = newNode;
+					}
+					//3. 链表长度+1
+					this.length += 1;
+				}
+				//2. toString方法
+				LinkedList.prototype.toString = function (){
+					//1. 定义变量
+					var current =this.head;
+					var listString = "";
+					//2. 循环获取一个个的节点
+					while (current){
+						listString +=current.data + " ";
+						current = current.next;
+					}
+					return listString; 
+				}
+				//3. insert方法
+				LinkedList.prototype.insert = function(position,data){
+					//1. 对position进行越界判断
+					if(position<0 || position > this.length) return false;
+					//2. 根据data创建newNode
+					var newNode = new Node(data);
+					//3. 判断插入的位置是否是第一个
+					if(position == 0){
+						newNode.next = this.head;//新数据的下一个数据=头数据
+						this.head =newNode;//头数据=新的数据
+					}else{
+						var index  = 0;//第一个指针						
+						var current = this.head;//新的变量=头数据						
+						var previous = null;
+						//找到要插入的位置
+						while(index++ < position){
+							previous = current;//prev=当前下标值的数据	
+							current = current.next;//curr=当前下标值+1的数据
+						}
+						newNode.next = current;//新数据的下一个数据 =current 
+						previous.next = newNode;//previous的下一个数据 =新数据
+					}
+					//4. length+1
+					this.length++;
+					return true;
+				}
+			}
+			//测试代码
+			//1. 创建LinkedList
+			var list = new LinkedList();
+			list.append('a');
+			list.append('b');
+			list.append('c');
+			list.insert(2,"a");
+			list.insert(0,"b");
+			document.write(list);
+		</script>
+	</body>
+</html>
