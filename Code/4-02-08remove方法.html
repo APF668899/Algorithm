@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>remove方法</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//封装列表类
+			function LinkedList(){
+				//内部的类:节点类
+				function Node(data){
+					this.data = data;
+					this.next = null;	
+				}
+				//属性
+				this.head = null;
+				this.length = 0;
+				//1. 追加方法
+				LinkedList.prototype.append = function (data){
+					//1. 创建新的结点
+					var newNode =new Node(data);
+					//2. 判断是否添加的是第一个节点
+					if (this.length == 0) { //2.1 是第一个结点
+						this.head = newNode;
+					} else{ //2.2 不是第一个结点
+						//找到最后的一个结点
+						var current = this.head;
+						while(current.next){
+							current = current.next;
+						}
+						//最后的结点指向新的结点
+						current.next = newNode;
+					}
+					//3. 链表长度+1
+					this.length += 1;
+				}
+				//2. toString方法
+				LinkedList.prototype.toString = function (){
+					//1. 定义变量
+					var current =this.head;
+					var listString = "";
+					//2. 循环获取一个个的节点
+					while (current){
+						listString +=current.data + " ";
+						current = current.next;
+					}
+					return listString; 
+				}
+				//7. removeAt方法
+				LinkedList.prototype.removeAt = function(position){
+					//1. 越界判断
+					if(position<0 || position >= this.length) return false; 
+					//2. 判断是否删除的是第一个节点
+					if (position == 0) {
+						this.head = this.head.next;
+					}else{
+						var index = 0;
+						var current =this.head;
+						var previous = null;
+						while(index++ < position){
+							previous =current;
+							current = current.next;
+						}
+						//前一个节点的next指向,current的next即可
+						previous.next = current.next;
+					}
+					//3. length-1
+					this.length -= 1;
+					return true;
+				}
+				//8. remove方法
+				LinkedList.prototype.remove = function(data){
+					//1. 如果data和第一个节点相同,头指针指向原数据的第二个节点
+					if (data == this.head.data) {
+						this.head = this.head.next;
+					}else{
+						var index = 0;
+						var current =this.head;
+						var previous = null;
+						while(index < this.length && data!=current.data){
+							if(data!=current && current.next!=null){
+								previous =current;
+								current = current.next;	
+							}else{
+								return false;	
+							}							
+						}
+						//前一个节点的next指向,current的next即可
+						previous.next = current.next;
+						return true;
+					}
+					//3. length-1
+					this.length -= 1;
+				}
+			}
+			//测试代码
+			//1. 创建LinkedList
+			var list = new LinkedList();
+			list.append('my');
+			list.append('name');
+			list.append('is');
+			list.append('fly');
+			list.append('sand');
+			list.remove('aaa');
+			list.remove('is');
+			list.remove('sand');
+			list.remove('my');
+			list.append('sand');
+			list.remove('fly');
+			document.write(list);				
+		</script>
+	</body>
+</html>
