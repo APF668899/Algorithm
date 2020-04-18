@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>get方法</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//封装双向链表
+			function DoublyLinkedList(){
+				//内部类:节点类
+				function Node(data){
+//					this.prev = null;  
+					this.data = data;
+					this.next = null;
+				}
+				//属性
+				this.head = null;//链表头数据
+				this.tail = null;//链表尾数据
+				this.length = 0;//链表长度
+				//常见的操作:方法
+				//1. append追加方法
+				DoublyLinkedList.prototype.append = function(data){
+					//1. 创建第一个节点
+					var　newNode = new Node(data);
+					//2. 判断是否添加的是第一个节点
+					if (this.length == 0) {//是第一个节点						
+						this.head = newNode;
+						this.tail = newNode;
+					}else{//不是第一个节点
+						newNode.prev = this.tail;
+						this.tail.next = newNode;
+						this.tail = newNode;			
+					}
+					this.length += 1;
+				}
+				//2. 将链表转成字符串形式
+				//2.1 toString()方法
+				DoublyLinkedList.prototype.toString = function(){
+					return this.backwardString();
+				}
+				//2.2 forwardString方法
+				DoublyLinkedList.prototype.forwardString = function(){
+					console.log("b");
+					//1. 定义变量
+					var current = this.tail;
+					var resultString = "";
+					//2. 依次向前遍历,获取每一个节点
+					while (current){
+						resultString += current.data + "  ";
+						current = current.prev;
+					}
+					return resultString;
+				}
+				//2.3 backwardString方法
+				DoublyLinkedList.prototype.backwardString = function(){
+					//1. 定义变量
+					var current = this.head;//current = 头元素
+					var resultString = "";
+					//2. 依次向后遍历,获取每个节点
+					while (current){
+						resultString += current.data+"  ";
+						current = current.next;
+					}
+					return resultString;
+				}	
+				//4. get方法
+				DoublyLinkedList.prototype.get = function(position){
+					//1. 越界判断
+					if (position < 0 || position >= this.length) return null;		
+					//2. 获取方法
+					var current = this.head;
+					var curr = this.tail;
+					var index = 0;
+					var behind = this.length;
+					if(position <= this.length/2){
+						while (index++ <=position-1){
+							current = current.next;
+						}
+					}else{
+						while (behind-- >position+1){
+							curr = curr.prev;
+						}
+						current.data =curr.data;
+					}
+					return current.data;
+				}
+			}
+			var list = new DoublyLinkedList();
+			list.append("my");
+			list.append("name");
+			list.append("is");
+			list.append("fly");
+			list.append("sand");
+			list.append("what");
+			list.append("old");
+			list.append("you");
+			list.append("and");
+			list.append("you");
+			document.write(list.get(0)+"<br>");
+			document.write(list.get(3)+"<br>");
+			document.write(list.get(7)+"<br>");
+			document.write(list.get(6)+"<br>");
+			document.write(list.get(4)+"<br>");
+			list.append("?");
+			document.write(list.get(10)+"<br>");
+		</script>
+	</body>
+</html>
