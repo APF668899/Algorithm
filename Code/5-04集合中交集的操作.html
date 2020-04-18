@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>集合中交集的操作</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//封装集合			
+			function Set(){
+				//属性
+				this.items = {};
+				//方法
+				//1. add方法
+				Set.prototype.add = function(value){
+					//判断当前集合是否包含了该元素
+					if(this.has(value)) return false;					
+					// 将元素添加到集合中
+					this.items[value] = value;
+					return true;
+				}
+				//2. has方法
+				Set.prototype.has = function(value){
+					return this.items.hasOwnProperty(value);
+				}
+				//3. remove方法
+				Set.prototype.remove = function(value){
+					//1. 判断集合中是否包含该元素
+					if(!this.has(value)) return false;
+					//2. 将元素从属性中删除 
+					delete this.items[value];
+					return true;
+				}
+				//4. clear方法
+				Set.prototype.clear = function(){
+					this.items ={};
+				}
+				//5. size方法
+				Set.prototype.size = function(){
+					return Object.keys(this.items).length;
+				}
+				//6. values获取集合中的所有的值
+				Set.prototype.values = function(){
+					return Object.keys(this.items);
+				}
+				//8. 集合中交集的操作
+				Set.prototype.intersection = function(otherSet){
+					//this:集合对象A
+					//otherSet:集合对象B
+					//1. 创建新的集合
+					var intersectionSet = new Set();
+					//2. 将A集合中取出元素然后对比B集合中是否有这个元素
+					var values = this.values();
+					for (var i = 0;i<values.length;i++) {
+						var item = values[i];
+						if (otherSet.has(item)) {
+							intersectionSet.add(item);
+						}
+					}
+					return intersectionSet;
+				}
+			}
+			var set = new Set();
+			//添加方法
+			console.log(set.add("my"));
+			console.log(set.add("my"));
+			console.log(set.add("name"));
+			console.log(set.add("is"));
+			console.log(set.add("fly"));
+			console.log(set.add("sand"));
+			document.write(set.values()+"<br>");
+			var setA = new Set();
+			setA.add("how");
+			setA.add("old");
+			setA.add("are");
+			setA.add("you");
+			setA.add("name");
+			setA.add("my");
+			setA.add("fly");
+			setA.add("sand");
+			var intersectionSet = set.intersection(setA);
+			document.write(intersectionSet.values());
+		</script>
+	</body>
+</html>
