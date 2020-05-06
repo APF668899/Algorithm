@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>哈希函数</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//设计哈希函数
+			// 1>将字符串转成比较在的数字:hashCode
+			// 2>将大的数字hashCode压缩到数组范围之内			
+			function hashFunc(str,size){
+				var hasCode = 0;
+				//2. 霍纳算法,来计算hashCode的值
+				// word -> Unicode编码
+				for (var i = 0;i < str.length;i++) {
+					hasCode = 37 * hasCode + str.charCodeAt(i);
+				}
+				//3. 取余操作
+				var index = hasCode % size;
+				alert(index)
+				return index;
+			}
+			//测试哈希函数
+			console.log(hashFunc("abc",7));
+			console.log(hashFunc("a",7));
+			console.log(hashFunc("b",7));
+			console.log(hashFunc("c",7));
+			console.log(hashFunc("d",7));
+			console.log(hashFunc("e",7));
+			console.log(hashFunc("f",7));
+		</script>
+	</body>
+</html>
