@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>删除方法</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//哈希表的封装
+			function HashTable(){
+				//属性
+				this.storage = [];//放数据的数组
+				this.count = 0;//记录表中有多少个元素
+				this.limit = 7;//当前数组的总长度,长度最好是质数
+				//方法
+				//哈希函数
+				function hashFunc(str,size){
+					var hasCode = 0;
+					for (var i = 0;i < str.length;i++) {
+						hasCode = 37 * hasCode + str.charCodeAt(i);
+					}
+					var index = hasCode % size;
+					alert(index)
+					return index;
+				}
+				//插入和修改操作					 
+				HashTable.prototype.put = function (key,value){
+					//1. 根据key获取索引值
+					var index = this.hashFunc(key,this.limit); 
+					//2. 根据index取出对应的bucket
+					var bucket = this.storage[index];
+					//3. 判断该bucket是否为空
+					if (bucket == null) {
+						bucket = [];
+						this.storage[index] = bucket;
+					}
+					//4. 判断是否是修改数据
+					for (var i = 0;i < bucket.length;i++) {
+						var tuple = bucket[i];
+						if (tuple[0] == key) {
+							tuple[1] = value;
+							return ;
+						}
+					}
+					//5. 进行添加方法
+					bucket.push([key,value])
+					this.count += 1;					
+				}	
+				//获取操作
+				HashTable.prototype.get = function (key){
+					//1. 根据key获取对应的index
+					var index = this.hashFunc(key,this.limit);
+					//2. 根据index获取对应的bucket
+					var bucket = this.storage[index];
+					//3. 判断bucket是否为空
+					if (bucket == null) {
+						return null;
+					}
+					//4. 有bucket,那么就进行线性查找
+					for (var i = 0;i < bucket.length;i++) {
+						var tuple = bucket[i];
+						if (tuple[0] == key) {
+							return tuple[i];
+						}
+					}
+					//5. 依然没有找到,那么返回null
+					return null;
+				}
+				//删除方法
+				HashTable.prototype.remove = function(key){
+					//1. 根据key获取对应的index
+					var index = this.hashFunc(key,this.limit);
+					//2. 根据index获取对应的bucket
+					var bucket = this.storage[index];
+					//3. 判断bucket是否为空
+					if (bucket == null) return null;				
+					for (var i = 0; i < bucket.length;i++ ) {
+						var tuple = bucket[i];
+						if (tuple[0] == key) {
+							bucket.splice(i,1);
+							this.count--;
+							return tuple[1];
+						}
+					}
+					return null;
+				}
+			}
+		</script>
+	</body>
+</html>
