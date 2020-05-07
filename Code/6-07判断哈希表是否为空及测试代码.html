@@ -14,14 +14,15 @@
 				this.limit = 7;//当前数组的总长度,长度最好是质数
 				//方法
 				//哈希函数
-				HashTable.prototype.hashFunc = function(str,size){
-					console.log(str+"|"+size)
+				HashTable.prototype.hashFunc = function(str,size){			
 					var hasCode = 0;
+					console.log(str.length);
 					for (var i = 0;i < str.length;i++) {
 						hasCode = 37 * hasCode + str.charCodeAt(i);
+						console.log(i+"|"+str.charCodeAt(i)+"|"+hasCode);
 					}
 					var index = hasCode % size;
-					alert(index)
+					console.log(index+"|"+hasCode+"|"+size);
 					return index;
 				}
 				//插入和修改操作					 
@@ -30,6 +31,7 @@
 					var index = this.hashFunc(key,this.limit); 
 					//2. 根据index取出对应的bucket
 					var bucket = this.storage[index];
+					console.log(index+"|"+bucket);
 					//3. 判断该bucket是否为空
 					if (bucket == null) {
 						bucket = [];
@@ -39,8 +41,8 @@
 					for (var i = 0;i < bucket.length;i++) {
 						var tuple = bucket[i];
 						if (tuple[0] == key) {
-							tuple[1] = value;
-							return ;
+							tuple[1] = value;						
+							return;
 						}
 					}
 					//5. 进行添加方法
@@ -78,6 +80,7 @@
 					for (var i = 0; i < bucket.length;i++ ) {
 						var tuple = bucket[i];
 						if (tuple[0] == key) {
+							//splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目。
 							bucket.splice(i,1);
 							this.count--;
 							return tuple[1];
@@ -99,18 +102,23 @@
 			//1. 创建哈希表 
 			var ht = new HashTable();
 			//2. 插入数据
-			ht.put('abc','123');
-			ht.put('nba','321');
-			ht.put('cba','520');
-			ht.put('nuc','521');
+			ht.put('my','mean:我');
+			ht.put('name','mean:名字');
+			ht.put('is','mean:是');
+			ht.put('fly','mean:飞');
+			ht.put('sand','mean:沙');
+			ht.put('and','mean:和');
+			ht.put('you','mean:你');			
 			//3. 获取数据
-			console.log(ht.get('cba'));
+			console.log(ht.get('name'));
 			//4. 修改方法
-			ht.put('abc','250');
-			console.log(ht.get('abc'));
+			ht.put('my','mean:我的');
+			console.log(ht.get('my'));
 			//5. 删除方法
-			ht.remove('abc');
-			console.log(ht.get('abc'));
+			ht.remove('and');
+			console.log(ht.get('and'));
+			console.log(ht.storage)
+			console.log(ht.storage[3][0])
 		</script>
 	</body>
 </html>
