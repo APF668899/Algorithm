@@ -16,13 +16,10 @@
 				//哈希函数
 				HashTable.prototype.hashFunc = function(str,size){			
 					var hasCode = 0;
-					console.log(str.length);
 					for (var i = 0;i < str.length;i++) {
-						hasCode = 37 * hasCode + str.charCodeAt(i);
-						console.log(i+"|"+str.charCodeAt(i)+"|"+hasCode);
+						hasCode = 37 * hasCode + str.charCodeAt(i);						
 					}
 					var index = hasCode % size;
-					console.log(index+"|"+hasCode+"|"+size);
 					return index;
 				}
 				//插入和修改操作					 
@@ -31,7 +28,6 @@
 					var index = this.hashFunc(key,this.limit); 
 					//2. 根据index取出对应的bucket
 					var bucket = this.storage[index];
-					console.log(index+"|"+bucket);
 					//3. 判断该bucket是否为空
 					if (bucket == null) {
 						bucket = [];
