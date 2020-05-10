@@ -16,13 +16,10 @@
 				//哈希函数
 				HashTable.prototype.hashFunc = function(str,size){			
 					var hasCode = 0;
-					console.log(str.length);
 					for (var i = 0;i < str.length;i++) {
 						hasCode = 37 * hasCode + str.charCodeAt(i);
-						console.log(i+"|"+str.charCodeAt(i)+"|"+hasCode);
 					}
 					var index = hasCode % size;
-					console.log(index+"|"+hasCode+"|"+size);
 					return index;
 				}
 				//插入和修改操作					 
@@ -30,8 +27,7 @@
 					//1. 根据key获取索引值
 					var index = this.hashFunc(key,this.limit); 
 					//2. 根据index取出对应的bucket
-					var bucket = this.storage[index];
-					console.log(index+"|"+bucket);
+					var bucket = this.storage[index];					
 					//3. 判断该bucket是否为空
 					if (bucket == null) {
 						bucket = [];
@@ -110,7 +106,7 @@
 					return this.count;
 				}
 				//哈希表扩容
-				HasTable.prototype.resize = function(newLimit){
+				HashTable.prototype.resize = function(newLimit){
 					//1. 保存旧的数组内容
 					var oldStorage = this.storage;
 					//2. 重置所有属性
@@ -126,24 +122,26 @@
 						}
 						//3.3  bucket中有数据,那么取出数据,重新插入
 						for (var j = 0;j < bucket.length;j++) {
-							var tuplg = bucket[j];
+							var tuple = bucket[j];
 							this.put(tuple[0],tuple[1])
 						}
 					}
 				}
 				//判断是否为质数
-				function  isPrime(num){
-					var temp = parseInt(Math.sqrt(num));
-					for (var i = 2;i <= temp;i++) {
-						if(num % i ==0){
-							return false;
-						}
-					}
-					return true;
+				function isPrime(num){
+				   	if(num == 2 || num == 3 )
+				   	    return true ;				 
+				  	if(num%6 != 1 && num%6 != 5)				   	
+				    	return false;				 	    
+				  	var tmp =Math.sqrt(num);				 
+				    for(var i = 5;i <= tmp; i+=6 )
+				        if(num%i == 0 || num%(i+2) == 0)
+				            return false;                 
+				  	return true;
 				}
 				//获取质数的方法
-				HasTable.prototype.getPrime = function(num){
-					while(!this.isPrime(num)) num++;
+				HashTable.prototype.getPrime = function(num){
+					while(!isPrime(num)) num++;
 					return num;
 				}
 			}
@@ -156,8 +154,9 @@
 			ht.put('is','mean:是');
 			ht.put('fly','mean:飞');
 			ht.put('sand','mean:沙');
-			ht.put('and','mean:和');
-			ht.put('you','mean:你');			
+			ht.put('what','mean:什么');
+			ht.put('about','mean:关于');
+			ht.put('you','mean:你');		
 			//3. 获取数据
 			console.log(ht.get('name'));
 			//4. 修改方法
