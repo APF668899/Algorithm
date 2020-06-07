@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图结构</title>
+	</head>
+	<body>
+		<script type="text/javascript">			
+			//创建字典的构造函数
+			function Dictionay(){
+				//字典属性
+				this.items = {};
+				//字典的操作方法
+				//在字典中添加键值对
+				Dictionay.prototype.set = function(key,value){
+					this.items[key] = value;
+				}
+				//创建字典中是否有某个key
+				Dictionay.prototype.has = function(key){
+					return this.items.hasOwnProperty(key);
+				}
+				//从字典中移除元素
+				Dictionay.prototype.remove = function(key){
+					//1. 判断字典中是否有这个key
+					if (!this.has(key)) return false;
+					//2. 从字典中删除key
+					delete this.items[key];
+					return true;
+				}
+				//根据key获取value
+				Dictionay.prototype.get = function(key){
+					return this.has(key) ? this.items[key] : undefined;
+				}
+				//获取所有的keys
+				Dictionay.prototype.keys = function(){
+					return Object.keys(this.items);
+				}
+				//获取所有的value
+				Dictionay.prototype.values = function(){
+					return Object.values(this.items);
+				}
+				//size方法
+				Dictionay.prototype.size = function(){
+					return this.keys().length;
+				}
+				//clear方法:清空字典
+				Dictionay.prototype.clear = function(){
+					this.items = {};
+				}
+			}	
+			//封装图结构
+			function Graph(){
+				//属性：顶点(数组),边(字典)
+				this.vertexes = [];//顶点
+				this.edges = new Dictionay();//边
+				//方法
+				//添加方法
+				//1. 添加顶点的方法
+				Graph.prototype.addVertexes = function(v){
+					this.vertexes.push(v);
+					this.edges.set(v,[]);
+				}
+				//2. 添加边的方法
+				Graph.prototype.addEdge = function(v1,v2){
+					this.edges.get(v1).push(v2);
+					this.edges.get(v1).push(v1);
+				}
+			}
+			//测试代码
+			//1. 创建图结构
+			var graph = new Graph();
+			//2. 添加顶点 
+			var myVertexes = ['A','B','C','D','E','F','G','H','I'];
+			for (var i = 0; i <　myVertexes.length; i++) {
+				graph.addVertexes(myVertexes[i]);
+			}
+			//添加边
+			graph.addEdge('A','B');
+			graph.addEdge('A','C');
+			graph.addEdge('A','D');
+			graph.addEdge('C','D');
+			graph.addEdge('C','G');
+			graph.addEdge('D','G');
+			graph.addEdge('D','H');
+			graph.addEdge('B','E');
+			graph.addEdge('B','F');
+			graph.addEdge('E','I');			
+		</script>
+	</body>
+</html>
