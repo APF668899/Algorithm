@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function BinarySearchTree(){
+				function Node(key){
+					this.key = key;
+					this.left  = null;
+					this.right = null;
+				}
+				//生成树
+				BinarySearchTree.prototype.tree = function(arr){
+					for (var i = 0; i < arr.length; i++) {
+						this.insert(arr[i]);//插入数据
+					}
+				}
+				//属性
+				this.root = null;
+				//方法
+				//插入数据
+				BinarySearchTree.prototype.insert = function(key){
+					//1. 根据key创建节点
+					var newNode = new Node(key);
+					//2. 判断根节点是否有值
+					if (this.root == null) {
+						this.root = newNode;
+					}else{
+						this.insertNode(this.root,newNode)
+					}
+				}
+				BinarySearchTree.prototype.insertNode = function(node,newNode){					
+					if (newNode.key < node.key) {
+						if (node.left == null) {
+							node.left = newNode;
+						}else{
+							this.insertNode(node.left,newNode)
+						}
+					}else{
+						if (node.right == null) {
+							node.right = newNode;
+						} else{
+							this.insertNode(node.right,newNode);
+						}
+					}
+				}	
+				//树的最大深度
+				BinarySearchTree.prototype.maxDepth = function(){
+					return this.mxaDepthNode(this.root)
+				} 		
+				var count = 1;
+				BinarySearchTree.prototype.mxaDepthNode = function(node){					
+					if(node == null){
+						return 0;						
+					}					
+					var leftMaxDepth = this.mxaDepthNode(node.left);
+					var rightMaxDepth = this.mxaDepthNode(node.right);
+					console.log(count++ +','+leftMaxDepth+'|'+rightMaxDepth)
+					return Math.max(leftMaxDepth,rightMaxDepth)+1;
+				}
+			}			
+			var bst = new BinarySearchTree();
+			var arr = [50,25,30,75,77,22,8,4,100,150,200,250,300];
+			//var arr = [50,25,75,80,28,30,70];
+			bst.tree(arr);//将数组生成树
+			alert(bst.maxDepth());//查看树的最大深度
+		</script>
+	</body>
+</html>
